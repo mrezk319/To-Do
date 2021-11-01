@@ -27,6 +27,7 @@ class HomeLayout extends StatelessWidget {
         builder: (context, state) => Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
+
             title: AppCubit.get(context)
                 .titles[AppCubit.get(context).currentIndex],
           ),

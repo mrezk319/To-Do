@@ -35,91 +35,98 @@ Widget textForm({
 Widget getTaskBuilder({@required Map model, context}) => Dismissible(
   key: Key(model['id'].toString()),
   child:Padding(
-    padding: const EdgeInsets.all(10.0),
-    child: Row(
-          children: [
-            CircleAvatar(
-              child: Text(
-                "${model['time']}",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              backgroundColor: Colors.lightBlueAccent,
+    padding: const EdgeInsets.all(5.0),
+    child: Card(
+      color: Colors.grey[200],
+      elevation:5,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+              children: [
+                CircleAvatar(
+                  child: Text(
+                    "${model['time']}",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  backgroundColor: Colors.deepPurple,
 
-              radius: 50,
+                  radius: 50,
 
-            ),
+                ),
 
-            SizedBox(
+                SizedBox(
 
-              width: 18,
+                  width: 18,
 
-            ),
+                ),
 
-            Expanded(
+                Expanded(
 
-              child: Column(
+                  child: Column(
 
-                crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
 
-                mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.min,
 
-                children: [
+                    children: [
 
-                  Text(
+                      Text(
 
-                    "${model['title']}",
+                        "${model['title']}",
 
-                    style: TextStyle(fontSize: 22),
+                        style: TextStyle(fontSize: 22),
+
+                      ),
+
+                      Text(
+
+                        "${model['date']}",
+
+                        style: TextStyle(color: Colors.grey[500]),
+
+                      )
+
+                    ],
 
                   ),
 
-                  Text(
+                ),
 
-                    "${model['date']}",
+                IconButton(
 
-                    style: TextStyle(color: Colors.grey[500]),
+                  icon: Icon(Icons.archive, color: Colors.blueGrey),
 
-                  )
+                  onPressed: () {
 
-                ],
+                    AppCubit.get(context).updateData(status: 'archived', id: model['id']);
 
-              ),
+                  },
 
-            ),
+                ),
 
-            IconButton(
+                IconButton(
 
-              icon: Icon(Icons.archive, color: Colors.blueGrey),
+                  icon: Icon(
 
-              onPressed: () {
+                    Icons.check_box,
 
-                AppCubit.get(context).updateData(status: 'archived', id: model['id']);
+                    color: Colors.green,
 
-              },
+                  ),
 
-            ),
+                  onPressed: () {
 
-            IconButton(
+                    AppCubit.get(context).updateData(status: 'done', id: model['id']);
 
-              icon: Icon(
+                  },
 
-                Icons.check_box,
+                ),
 
-                color: Colors.green,
-
-              ),
-
-              onPressed: () {
-
-                AppCubit.get(context).updateData(status: 'done', id: model['id']);
-
-              },
+              ],
 
             ),
-
-          ],
-
-        ),
+      ),
+    ),
   ),
   onDismissed: (direction){
     AppCubit.get(context).deleteData(id: model['id']);
@@ -129,14 +136,7 @@ Widget screenBuilder({@required tasks}) => ConditionalBuilder(
   condition: tasks.length > 0,
   builder: (context) => ListView.separated(
       itemBuilder: (context, index) => getTaskBuilder(model: tasks[index],context: context),
-      separatorBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 5),
-        child: Container(
-          width: double.infinity,
-          color: Colors.lightBlue,
-          height: 1,
-        ),
-      ),
+      separatorBuilder: (context, index) => const SizedBox(height: 0,),
       itemCount: tasks.length),
   fallback:(context)=> Center(
     child: Column(
