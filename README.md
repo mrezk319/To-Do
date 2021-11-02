@@ -6,4 +6,4 @@ A new Flutter application.
 
 This project is a starting point for a Flutter application
 
-<a href=""><img src="https://imgur.com/a/2ZqLhHN.jpg"></a>
+<a href=""><img src="https://imgur.com/a/2ZqLhHN"></a>
